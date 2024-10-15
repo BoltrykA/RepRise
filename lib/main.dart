@@ -25,14 +25,54 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  // Function to show the bottom sheet popover
+  void _showAddSetSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.all(16.0),
+          height: 200,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                'Add New Set',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 20),
+              ListTile(
+                leading: Icon(Icons.fitness_center),
+                title: Text('Add a new performance...'),
+                onTap: () {
+                  // Here, you'd handle adding a new set of reps
+                  Navigator.pop(context);  // Close the bottom sheet
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('New set of reps added!'))
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Page'),
-      ),
       body: Center(
         child: _pages.elementAt(_selectedIndex),
+      ),
+      // Plus button added to bottom right
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _showAddSetSheet(context),
+        child: Icon(Icons.add),
+        backgroundColor: Colors.blue,
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
